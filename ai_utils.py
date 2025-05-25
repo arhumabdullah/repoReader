@@ -1,6 +1,5 @@
 import openai
 
-# Set your OpenAI API key
 openai.api_key = "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"
 
 def get_explanation(test_name, value, value_range, unit):
@@ -22,20 +21,17 @@ def get_explanation(test_name, value, value_range, unit):
     )
     
     try:
-        # Adjusting for the new API
         response = openai.completions.create(
-            model="gpt-3.5-turbo",  # Or "gpt-4" if you have access
+            model="gpt-3.5-turbo",  
             prompt=prompt,
             max_tokens=150,
             temperature=0.7
         )
         
-        # Extracting the explanation from the response
         explanation = response['choices'][0]['text'].strip()
         return explanation
 
     except Exception as e:
-        # Handle errors and provide a fallback message
         print(f"OpenAI API Error: {e}")
         return "Unable to provide an explanation at the moment."
 
@@ -50,10 +46,8 @@ def analyze_value(value, normal_range):
     Returns:
         tuple: A tuple containing the result status (Low/Normal/High) and advice for follow-up.
     """
-    # Splitting the range into low and high values
     low, high = map(float, normal_range.split('-'))
     
-    # Categorizing the test result
     if value < low:
         return "Low", "Consider seeing a doctor or improving your diet."
     elif value > high:
